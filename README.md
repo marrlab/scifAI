@@ -1,8 +1,8 @@
 # scifAI: Explainable machine learning for profiling the immunological synapse and functional characterization of therapeutic antibodies
 
-Here, we present `scifAI`, a machine learning framework for the efficient and explainable analysis of high-throughput imaging data based on a modular open-source implementation. We also publish the largest publicly available multi-channel IFC data set with over 2.8 million images of primary human T-B cell conjugates from multiple donors, and demonstrate how scifAI can be used to detect patterns and build predictive models. We showcase the potential of our framework for (i) the prediction of immunologically relevant cell class frequencies, (ii) the systematic morphological profiling of the immunological synapse, (iii) the investigation of inter donor and inter and intra-experiment variability, as well as (iv) the characterization of the mode of action of therapeutic antibodies and (v) the prediction of their functionality in vitro. Combining high-throughput imaging of the immunological synapse using IFC with rigorous data preprocessing and machine learning enables researchers in pharma to screen for novel antibody candidates and improved evaluation of lead molecules in terms of functionality, mode-of-action insights and antibody characteristics such as affinity, avidity and format.
+Here, we present `scifAI`, a machine learning framework for the efficient and explainable analysis of high-throughput imaging data based on a modular open-source implementation. The open-source framework was developed in python, leveraging functionality from state-of-the-art modules, such as scikit-learn, SciPy, NumPy and pandas (Methods), allowing for smooth integration and extension of existing analysis pipelines. Universally applicable for single-cell imaging projects, the framework provides functionality for import and preprocessing of input data, several feature engineering pipelines including the implementation of a set of biologically motivated features and autoencoder-generated features (Methods), as well as methodology for efficient and meaningful feature selection. Moreover, the framework implements several machine learning and deep learning models for training supervised image classification models, e.g. for the prediction of cell configurations such as the immunological synapse. Following the principle of multi-instance learning, the framework also implements functionality to regress a set of selected images, against a downstream continuous readout such as cytokine production. Extensive documentation, as well as example code in the form of Jupyter notebooks is provided.
 
-Note: this repository only includes the main python package and multiple jupyter notebooks on publicly available datasets. For following on how this package is used in the main publication, please refer to https://github.com/marrlab/scifAI-notebooks 
+Note: this repository only includes the main python package and multiple jupyter notebooks on publicly available datasets. For following on how this package is applied in the main publication, please refer to https://github.com/marrlab/scifAI-notebooks 
 
 ## Data structure
 
@@ -93,4 +93,7 @@ df_features = df_features.loc[:, df_features.std() > 0.]
 
 For different examples, you can follow our examples in the [docs](docs) folder.
 
+# How to cite this work
+
+coming soon
 
