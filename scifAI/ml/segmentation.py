@@ -2,11 +2,33 @@ from skimage.filters import threshold_otsu
 from skimage.filters import sobel
 from skimage.morphology import disk, remove_small_objects, binary_closing
 from scipy.ndimage import binary_fill_holes
+from sklearn.base import BaseEstimator
+from sklearn.base import TransformerMixin
 
 __all__ = ['segment_all_channels',
            'bright_field_segmentation',
            'fluorescent_segmentation']
 
+class SegmentationGenerator(BaseEstimator, TransformerMixin):
+    """
+    mask based features
+    """
+    def __init__(   self, 
+                    min_size=100, 
+                    selem=disk(5)): 
+        self.min_size = min_size
+        self.selem = selem
+    
+    def fit(self, X = None, y = None):        
+        return self
+    
+    def transform(self,X):
+        image = X.copy() 
+        mask = segment_all_channels(image.copy(), 
+                                    self.min_size, 
+                                    self.selem)
+
+        return [image, mask]
 
 def segment_all_channels(image, min_size=100, selem=disk(5)):
     """calculates the segmentation per channel
