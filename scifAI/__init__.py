@@ -1,1 +1,1 @@
-from scifai.utils import metadata_generator
+from scifAI.utils import metadata_generator

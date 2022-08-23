@@ -9,14 +9,14 @@ def read(fname):
     return open(os.path.join(os.path.dirname(__file__), fname)).read()
 
 setup(
-    name='scifai',
+    name='scifAI',
     version='0.0.1',
     description='Open source package for Imaging FLow cytometry and AI',
     author='Ali Boushehri, Aleksandra Kornivetc',
     author_email='ali.boushehri@roche.com',
     license='MIT',
     keywords='Imaging FLow cytometry AI',
-    url='https://github.com/aliechoes/scifai',
+    url='https://github.com/aliechoes/scifAI',
     packages=find_packages(exclude=['doc*', 'test*']),
     install_requires=[  "numpy",
                         "pandas",

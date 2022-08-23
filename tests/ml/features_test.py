@@ -1,5 +1,5 @@
 
-from scifai.ml.features import *
+from scifAI.ml.features import *
 
 def test_features():
     pass
