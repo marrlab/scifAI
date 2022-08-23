@@ -1,6 +1,6 @@
 # Jupyter notebooks
 
-Here you can find different examples of how `scifai` can be used for feature extraction and analysis of single cell images. We used three publicly available datasets from:
+Here you can find different examples of how `scifAI` can be used for feature extraction and analysis of single cell images. We used three publicly available datasets from:
 
 - Reconstructing cell cycle and disease progression using deep learning. https://doi.org/10.1038/s41467-017-00623-3
 
