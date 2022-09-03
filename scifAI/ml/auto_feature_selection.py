@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-import logging
 from sklearn.base import BaseEstimator
 from sklearn.base import TransformerMixin
 

@@ -6,14 +6,6 @@ from monai.transforms.compose import Transform
 from PIL import Image
 import os
 from sklearn.base import BaseEstimator, TransformerMixin
-import scipy.sparse as sp
-from scipy.stats import kurtosis, skew
-from scipy.spatial import distance as dist
-from skimage.feature import greycomatrix, greycoprops
-from skimage.measure import shannon_entropy
-from skimage.measure import label, regionprops
-from skimage.measure import moments_hu, inertia_tensor, inertia_tensor_eigvals
-from skimage.measure import moments
 
 
 class LoadTensor(object):
@@ -81,7 +73,6 @@ class LoadImage(Transform):
     def __call__(self, name: Union[Sequence[Union[Path, str]], Path, str]):
         if isinstance(name, (np.ndarray, np.generic)):
             name = name[0]
-        img_array = list()
         class_dir = os.path.dirname(name)
         sample_id = os.path.basename(name) + "_Ch"
         channels = [np.asarray(Image.open(os.path.join(class_dir, file))) / 255. for file in os.listdir(class_dir) if
@@ -110,7 +101,7 @@ class ToTensorCustom(Transform):
 
 class RandomCrop3D():
     def __init__(self, img_sz, crop_sz):
-        c, h, w, d = img_sz
+        _, h, w, d = img_sz
         assert (h, w, d) > crop_sz
         self.img_sz = tuple((h, w, d))
         self.crop_sz = tuple(crop_sz)

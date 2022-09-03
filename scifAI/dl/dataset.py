@@ -1,5 +1,5 @@
 import torch
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 import numpy as np
 import h5py
 from skimage.util import crop
@@ -129,75 +129,3 @@ class DatasetGenerator(Dataset):
             return image.float(),  image.float()
         else:
             raise KeyError("%s is not a correct task" % self.task)
-
-
-class DatasetGeneratorFixMatch(Dataset):
-
-    def __init__(self,
-                metadata,
-                label_map,
-                reshape_size=64,
-                weak_transform=None,
-                strong_transform=None,
-                selected_channels=["Ch1"]):
-
-        self.metadata = metadata.copy().reset_index(drop = True)
-        self.selected_channels = selected_channels
-        self.num_channels = len(self.selected_channels)
-        self.reshape_size = reshape_size
-        self.label_map = label_map
-        self.weak_transform = weak_transform
-        self.strong_transform = strong_transform
-
-    def __len__(self):
-        return len(self.metadata)
-
-    def __getitem__(self, idx):
-
-        if torch.is_tensor(idx):
-            idx = idx.tolist()
-
-        ## get image and label
-        h5_file_path = self.metadata.loc[idx,"file"]
-        image_original= get_image(h5_file_path)
-        label = self.metadata.loc[idx,"label"]
-
-        ## creating the image
-        h, w = crop_pad_h_w(image_original, self.reshape_size)
-        h1_crop, h2_crop, h1_pad, h2_pad = h
-        w1_crop, w2_crop, w1_pad, w2_pad = w
-        image = np.zeros((  self.num_channels,
-                            self.reshape_size,
-                            self.reshape_size),
-                            dtype=np.float64)
-
-        # filling the image with selected channels
-        for i, ch in enumerate(self.selected_channels):
-            image_dummy = crop( image_original[:, :, ch],
-                                ((h1_crop, h2_crop),
-                                (w1_crop, w2_crop)))
-            image_dummy = np.pad(image_dummy,
-                                ((h1_pad, h2_pad),(w1_pad, w2_pad)),
-                                "constant",
-                                constant_values = image_dummy.mean())
-            image[i, :, :] = image_dummy
-            image_dummy = None
-
-        image_original = None
-
-        # map numpy array to tensor
-        image = torch.from_numpy(copy.deepcopy(image))
-        image_w = image.detach().clone()
-        image_s = image.detach().clone()
-        image = None
-
-        if self.weak_transform:
-            image_w = self.weak_transform(image_w)
-
-        if self.strong_transform:
-            image_s = self.strong_transform(image_s)
-
-
-        label = self.label_map[label]
-        label = torch.tensor(label).long()
-        return [image_w.float(), image_s.float()],  label

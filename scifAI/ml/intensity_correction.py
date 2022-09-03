@@ -1,4 +1,3 @@
-import numpy as np
 from skimage.exposure import rescale_intensity
 from sklearn.base import BaseEstimator
 from sklearn.base import TransformerMixin

@@ -319,7 +319,7 @@ class PercentileFeatures(BaseEstimator, TransformerMixin):
         image = X[0].copy() 
         features = dict()
         for ch in range(image.shape[2]):
-            for i, cut in enumerate(self.cuts):
+            for cut in self.cuts:
                 perc  = np.percentile(image[:,:,ch].ravel(), cut)
                 features["percentile_" + str(cut) +  "_Ch" + str(ch+1)] = perc
                 
