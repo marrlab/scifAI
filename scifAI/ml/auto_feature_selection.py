@@ -117,7 +117,7 @@ class AutoFeatureSelection(BaseEstimator, TransformerMixin):
             self.selected_features = self.selected_features + \
                                     np.where(im*correlation_support)[0].tolist()
             self.selected_features = sorted(list(set(self.selected_features)))
-        
+
         if self.verbose:
             print("From",
                     X.shape[1],
@@ -126,7 +126,7 @@ class AutoFeatureSelection(BaseEstimator, TransformerMixin):
 
         if self.verbose:
             print("Step 3: clustering over correlation of features")
-        
+
         corr_spearman = pd.DataFrame(X_[:, self.selected_features]).corr(self.correlation_method).to_numpy()
         corr_spearman = 1 - np.multiply(corr_spearman,corr_spearman)
         corr_spearman = hierarchy.ward(corr_spearman)

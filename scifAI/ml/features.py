@@ -11,7 +11,7 @@ from skimage.measure import regionprops_table
 from skimage.filters import  sobel
 from skimage.feature import hog
 from skimage.transform import resize
-from skimage.metrics import structural_similarity,hausdorff_distance
+from skimage.metrics import structural_similarity, hausdorff_distance
 
 
 class MaskBasedFeatures(BaseEstimator, TransformerMixin):
@@ -19,20 +19,20 @@ class MaskBasedFeatures(BaseEstimator, TransformerMixin):
     mask based features
     """
     def __init__(self):
-        self.properties = [ "area", 
-                            "bbox_area", 
+        self.properties = [ "area",
+                            "bbox_area",
                             "convex_area",
-                            "eccentricity", 
-                            "equivalent_diameter", 
-                            "euler_number", 
-                            "extent", 
+                            "eccentricity",
+                            "equivalent_diameter",
+                            "euler_number",
+                            "extent",
                             "feret_diameter_max",
-                            "filled_area", 
-                            "major_axis_length", 
+                            "filled_area",
+                            "major_axis_length",
                             "max_intensity",
                             "mean_intensity",
                             "min_intensity",
-                            "minor_axis_length", 
+                            "minor_axis_length",
                             "moments_hu",
                             "orientation",
                             "perimeter",
@@ -78,18 +78,18 @@ class GLCMFeatures(BaseEstimator, TransformerMixin):
     Parameters
     ----------
     image : 3D array, shape (M, N, C)
-        The input image with multiple channels. 
+        The input image with multiple channels.
 
     Returns
     -------
-    features :  dict  
+    features :  dict
         dictionary including 'contrast_Chx', 'dissimilarity_Chx', 'homogeneity_Chx'
-        'ASM_Chx', 'energy_Chx' and 'correlation_Chx' per channel where 
-        x will be substituted by the channel number starting from 1. 
+        'ASM_Chx', 'energy_Chx' and 'correlation_Chx' per channel where
+        x will be substituted by the channel number starting from 1.
 
     """
 
-    def __init__(   
+    def __init__(
                 self,
                 distances=[5],
                 angles=[0],
@@ -98,7 +98,7 @@ class GLCMFeatures(BaseEstimator, TransformerMixin):
         self.angles = angles
         self.levels = levels
 
-    def fit(self, X=None, y=None):   
+    def fit(self, X=None, y=None):
         return self
 
     def transform(self, X):
@@ -110,7 +110,7 @@ class GLCMFeatures(BaseEstimator, TransformerMixin):
             # use 8bit pixel values for GLCM
             temp_image = (temp_image/temp_image.max())*255
             # convert to unsigned for GLCM
-            temp_image = temp_image.astype('uint8')  
+            temp_image = temp_image.astype('uint8')
 
             # calculating glcm
             glcm = greycomatrix(temp_image,
@@ -160,7 +160,7 @@ class GradientRMS(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.RMS = "RMS"
 
-    def fit(self, X=None, y=None):  
+    def fit(self, X=None, y=None):
         return self
 
     def transform(self, X):
@@ -179,17 +179,17 @@ class BackgroundMean(BaseEstimator, TransformerMixin):
     Parameters
     ----------
     image : 3D array, shape (M, N, C)
-        The input image with multiple channels. 
+        The input image with multiple channels.
 
     Returns
     -------
     features :  dict  
-        dictionary including 'RMS_Chx' 
+        dictionary including 'RMS_Chx'
     """
     def __init__(self):
         self.BackgroundMean = "BackgroundMean"
 
-    def fit(self, X=None, y=None):  
+    def fit(self, X=None, y=None):
         return self
 
     def transform(self, X):
@@ -305,7 +305,7 @@ class Collocalization(BaseEstimator, TransformerMixin):
                     features["hausdorff_distance" + suffix] = hausdorff_distance(channel1,channel2)
 
         return features
- 
+
 
 class PercentileFeatures(BaseEstimator, TransformerMixin):
     """calculates the percentile features per channel
@@ -341,8 +341,9 @@ class PercentileFeatures(BaseEstimator, TransformerMixin):
             for cut in self.cuts:
                 perc = np.percentile(image[:, :, ch].ravel(), cut)
                 features["percentile_" + str(cut) + "_Ch" + str(ch+1)] = perc
-                
+
         return features
+
 
 class HogFeatures(BaseEstimator, TransformerMixin):
     """calculates the set of hog features
@@ -369,7 +370,7 @@ class HogFeatures(BaseEstimator, TransformerMixin):
     def fit(self, X=None, y=None):
         return self
 
-    def transform(self,X):
+    def transform(self, X):
         image = X[0].copy()
         features = dict()
         for ch in range(image.shape[2]):
@@ -390,7 +391,7 @@ class HogFeatures(BaseEstimator, TransformerMixin):
 
 class IntersectionProperties(BaseEstimator, TransformerMixin):
     """Properties in the intersection of the cells
-    
+
     Properties in the intersection of the cells 
 
     Parameters
@@ -402,16 +403,16 @@ class IntersectionProperties(BaseEstimator, TransformerMixin):
 
     Returns
     -------
-    features :  dict  
+    features :  dict
         dictionary including sum_intensity_ratio, mean_intensity_ratio ...
 
     """
 
-    def __init__(self , channels=None, eps=1e-12):
+    def __init__(self, channels=None, eps=1e-12):
         self.eps = eps
         self.channels = channels
 
-    def fit(self, X=None, y=None):   
+    def fit(self, X=None, y=None):
         return self
 
     def transform(self, X):
@@ -458,9 +459,9 @@ class CenterOfCellsDistances(BaseEstimator, TransformerMixin):
         self.properties = [ "centroid",
                             "weighted_centroid" ]
 
-    def fit(self, X=None, y=None):        
+    def fit(self, X=None, y=None):
         return self
-    
+
     def transform(self,X):
         image = X[0].copy()
         mask = X[1].copy()

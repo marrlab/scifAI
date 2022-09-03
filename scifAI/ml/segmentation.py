@@ -9,36 +9,39 @@ __all__ = ['segment_all_channels',
            'bright_field_segmentation',
            'fluorescent_segmentation']
 
+
 class SegmentationGenerator(BaseEstimator, TransformerMixin):
     """
     mask based features
     """
-    def __init__(   self, 
-                    min_size=100, 
-                    selem=disk(5)): 
+    def __init__(   self,
+                    min_size=100,
+                    selem=disk(5)):
         self.min_size = min_size
         self.selem = selem
-    
-    def fit(self, X = None, y = None):        
+
+    def fit(self, X = None, y = None):
         return self
-    
-    def transform(self,X):
-        image = X.copy() 
-        mask = segment_all_channels(image.copy(), 
-                                    self.min_size, 
+
+    def transform(self, X):
+        image = X.copy()
+        mask = segment_all_channels(image.copy(),
+                                    self.min_size,
                                     self.selem)
 
         return [image, mask]
 
+
 def segment_all_channels(image, min_size=100, selem=disk(5)):
     """calculates the segmentation per channel
-    
+
     It considers the first channel is brightfield and the rest are fluorescents
 
     Parameters
     ----------
     image : 3D array, shape (M, N,C)
-        The input image with the first channel as brightfield and the rest as florescent 
+        The input image with the first channel as
+        brightfield and the rest as florescent
 
     Returns
     -------
@@ -64,20 +67,20 @@ def segment_all_channels(image, min_size=100, selem=disk(5)):
 
 def bright_field_segmentation(image, min_size=100, selem=disk(5)):
     """calculates the segmentation per channel using edge detection
-    
+
     It first calculates the sobel filtered image to calculate the edges.
-    Then removes the small objects, closes the binary shapes and 
+    Then removes the small objects, closes the binary shapes and
     finally fills the shapes.
 
     Parameters
     ----------
     image : 2D array, shape (M, N)
-        The input image only one channel 
+        The input image only one channel
 
     Returns
     -------
     segmented_image :  2D array, shape (M, N)
-        The binary mask 
+        The binary mask
 
     Raises
     -------
@@ -99,7 +102,8 @@ def bright_field_segmentation(image, min_size=100, selem=disk(5)):
 
     # segmentation
     threshold_level = threshold_otsu(edges)
-    bw = edges > threshold_level  # bw is a standard variable name for binary images
+    # bw is a standard variable name for binary images
+    bw = edges > threshold_level
 
     # postprocessing
     bw_cleared = remove_small_objects(bw, min_size)  # clear objects <100 px
@@ -113,20 +117,20 @@ def bright_field_segmentation(image, min_size=100, selem=disk(5)):
 
 def fluorescent_segmentation(image, min_size=100, selem=disk(5)):
     """calculates the segmentation using direct thresholding
-    
+
     It calcualtes the threshold using otsu thresholding.
-    Then removes the small objects, closes the binary shapes and 
+    Then removes the small objects, closes the binary shapes and
     finally fills the shapes.
 
     Parameters
     ----------
     image : 2D array, shape (M, N)
-        The input image with multiple channels. 
+        The input image with multiple channels.
 
     Returns
     -------
-    segmented_image :  2D array (int), shape (M, N) 
-        Segmentation of the input image. 
+    segmented_image :  2D array (int), shape (M, N)
+        Segmentation of the input image.
 
     Raises
     -------
@@ -145,7 +149,8 @@ def fluorescent_segmentation(image, min_size=100, selem=disk(5)):
     segmented_image = image.copy() * 0
     # segmentation
     threshold_level = threshold_otsu(image)
-    bw = image > threshold_level  # bw is a standard variable name for binary images
+    # bw is a standard variable name for binary images
+    bw = image > threshold_level  
 
     # postprocessing
     bw_cleared = remove_small_objects(bw, min_size)  # clear objects
