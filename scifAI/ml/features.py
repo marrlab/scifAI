@@ -170,6 +170,7 @@ class GradientRMS(BaseEstimator, TransformerMixin):
             features["gradient_RMS_Ch" + str(ch+1)] = np.sqrt(np.mean(np.square(sobel(image[:, :, ch]))))
         return features
 
+
 class BackgroundMean(BaseEstimator, TransformerMixin):
     """calculates average background pixels
 
@@ -183,7 +184,7 @@ class BackgroundMean(BaseEstimator, TransformerMixin):
 
     Returns
     -------
-    features :  dict  
+    features :  dict
         dictionary including 'RMS_Chx'
     """
     def __init__(self):
@@ -216,8 +217,8 @@ class CellShape(BaseEstimator, TransformerMixin):
 
     def transform(self, X):
         image = X[0].copy()
-        mask = X[1].copy()    
-        segmented_cell = image.copy() * mask.copy()    
+        mask = X[1].copy()
+        segmented_cell = image.copy() * mask.copy()
         # storing the feature values
         features = dict()
         for ch in range(image.shape[2]):
@@ -318,17 +319,17 @@ class PercentileFeatures(BaseEstimator, TransformerMixin):
     ----------
     image : 3D array, shape (M, N, C)
         The input image with multiple channels.
-    n_bins : positive int 
+    n_bins : positive int
         number of bins
 
     Returns
     -------
-    features :  dict  
+    features :  dict
         dictionary including hist_0_Ch1, hist_1_Ch1 ...
 
     """
 
-    def __init__(self,  cuts=range(10,100,10)):
+    def __init__(self,  cuts=range(10, 100, 10)):
         self.cuts = cuts
 
     def fit(self, X=None, y=None):
@@ -392,7 +393,7 @@ class HogFeatures(BaseEstimator, TransformerMixin):
 class IntersectionProperties(BaseEstimator, TransformerMixin):
     """Properties in the intersection of the cells
 
-    Properties in the intersection of the cells 
+    Properties in the intersection of the cells
 
     Parameters
     ----------
@@ -425,8 +426,8 @@ class IntersectionProperties(BaseEstimator, TransformerMixin):
             self.channels = range(n_channels)
 
         features = dict()
-        for ch1 in range(0,n_channels):
-            for ch2 in range(ch1+1,n_channels):
+        for ch1 in range(0, n_channels):
+            for ch2 in range(ch1+1, n_channels):
                 intersection_mask = mask[:, :, ch1].copy() * mask[:, :, ch2].copy()
                 for ch in self.channels:
                     suffix = "_Ch" + str(ch + 1) + "_R" + str(ch1 + 1) + "_R" + str(ch2 + 1)
@@ -457,30 +458,30 @@ class CenterOfCellsDistances(BaseEstimator, TransformerMixin):
     """
     def __init__(self):
         self.properties = [ "centroid",
-                            "weighted_centroid" ]
+                            "weighted_centroid"]
 
     def fit(self, X=None, y=None):
         return self
 
-    def transform(self,X):
+    def transform(self, X):
         image = X[0].copy()
         mask = X[1].copy()
- 
+
         # storing the feature values
         features = dict()
         n_channels = image.shape[2]
-        for ch1 in range(0,n_channels):
-            for ch2 in range(ch1+1,n_channels): 
-                channel1 = regionprops_table(mask[:, :, ch1].astype(int), 
-                                                image[:, :, ch1], 
-                                                properties = self.properties )  
-                    
-                channel2 = regionprops_table(mask[:, :, ch2].astype(int), 
-                                                image[:, :, ch2], 
-                                                properties = self.properties ) 
+        for ch1 in range(0, n_channels):
+            for ch2 in range(ch1+1, n_channels):
+                channel1 = regionprops_table(mask[:, :, ch1].astype(int),
+                                                image[:, :, ch1],
+                                                properties=self.properties)
+
+                channel2 = regionprops_table(mask[:, :, ch2].astype(int),
+                                                image[:, :, ch2],
+                                                properties=self.properties)
 
                 ## distance feature
-                feature_name = "cell_distance_Ch" + str(ch1 + 1) + "_Ch" +  str(ch2 + 1)
+                feature_name = "cell_distance_Ch" + str(ch1 + 1) + "_Ch" + str(ch2 + 1)
                 try:
                     features[feature_name] = (channel2['centroid-0'][0] - channel1['centroid-0'][0])**2
                     features[feature_name] += (channel2['centroid-1'][0] - channel1['centroid-1'][0])**2
@@ -488,8 +489,8 @@ class CenterOfCellsDistances(BaseEstimator, TransformerMixin):
                 except IndexError:
                     features[feature_name] = -1.
 
-                ## weighted distance feature  
-                feature_name = "weighted_cell_distance_Ch" + str(ch1 + 1) + "_Ch" +  str(ch2 + 1)
+                ## weighted distance feature
+                feature_name = "weighted_cell_distance_Ch" + str(ch1 + 1) + "_Ch" + str(ch2 + 1)
                 try:
                     features[feature_name] = (channel2['weighted_centroid-0'][0] - channel1['weighted_centroid-0'][0])**2
                     features[feature_name] += (channel2['weighted_centroid-1'][0] - channel1['weighted_centroid-1'][0])**2

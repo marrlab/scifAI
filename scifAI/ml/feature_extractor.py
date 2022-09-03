@@ -6,7 +6,7 @@ from scifAI.utils import list_of_dict_to_dict
 
 
 def get_image_mask(metadata, i=0):
-    h5_file = h5py.File(metadata.loc[i, "file"], "r")      
+    h5_file = h5py.File(metadata.loc[i, "file"], "r")
     image = h5_file.get("image")[()]*1.
     try:
         mask = h5_file.get("mask")[()]
@@ -22,7 +22,7 @@ class FeatureExtractor(object):
 
     def extract_(self, f):
         try:
-            h5_file = h5py.File(f, "r")      
+            h5_file = h5py.File(f, "r")
             image = h5_file.get("image")[()]*1.
             try:
                 mask = h5_file.get("mask")[()]

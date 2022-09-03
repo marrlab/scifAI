@@ -14,7 +14,7 @@ def list_of_dict_to_dict(list_of_dicts):
 
 
 def get_label(h5_file_path):
-    h5_file = h5py.File(h5_file_path, "r")  
+    h5_file = h5py.File(h5_file_path, "r")
     ## label
     results = dict()
     try:

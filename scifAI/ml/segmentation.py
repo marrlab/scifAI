@@ -150,7 +150,7 @@ def fluorescent_segmentation(image, min_size=100, selem=disk(5)):
     # segmentation
     threshold_level = threshold_otsu(image)
     # bw is a standard variable name for binary images
-    bw = image > threshold_level  
+    bw = image > threshold_level
 
     # postprocessing
     bw_cleared = remove_small_objects(bw, min_size)  # clear objects

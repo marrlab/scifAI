@@ -62,9 +62,9 @@ class AddGaussianNoise(object):
 
 class LoadImage(Transform):
     """
-    Load common 2D image format (PNG, JPG, etc. using PIL) file or files from 
-    provided path. If loading a list of files, stack them together and add a 
-    new dimension as first dimension, and use the meta data of the first image 
+    Load common 2D image format (PNG, JPG, etc. using PIL) file or files from
+    provided path. If loading a list of files, stack them together and add a
+    new dimension as first dimension, and use the meta data of the first image
     to represent the stacked result.
     It's based on the Image module in PIL library:
     https://pillow.readthedocs.io/en/stable/reference/Image.html
