@@ -35,7 +35,8 @@ class ShuffleChannel(object):
             for channel in self.channels_to_shuffle:
                 channel_shape = image[channel].shape
                 if self.perturb:
-                    image[channel] = torch.full(channel_shape, torch.mean(image[channel]))
+                    image[channel] = torch.full(channel_shape,\
+                                                torch.mean(image[channel]))
                 else:
                     image[channel] = image[channel].flatten()[
                         torch.randperm(len(image[channel].flatten()))].reshape(
@@ -55,14 +56,16 @@ class AddGaussianNoise(object):
         return tensor
 
     def __repr__(self):
-        return self.__class__.__name__ + '(mean={0}, std={1})'.format(self.mean, self.std)
+        return self.__class__.__name__ + \
+            '(mean={0}, std={1})'.format(self.mean, self.std)
 
 
 class LoadImage(Transform):
     """
-    Load common 2D image format (PNG, JPG, etc. using PIL) file or files from provided path.
-    If loading a list of files, stack them together and add a new dimension as first dimension,
-    and use the meta data of the first image to represent the stacked result.
+    Load common 2D image format (PNG, JPG, etc. using PIL) file or files from 
+    provided path. If loading a list of files, stack them together and add a 
+    new dimension as first dimension, and use the meta data of the first image 
+    to represent the stacked result.
     It's based on the Image module in PIL library:
     https://pillow.readthedocs.io/en/stable/reference/Image.html
     """
@@ -84,7 +87,8 @@ class LoadImage(Transform):
 
 class ToTensorCustom(Transform):
     """
-    Converts the input image to a tensor without applying any other transformations.
+    Converts the input image to a tensor without applying any other
+    transformations.
     """
 
     def __call__(self, img: Union[np.ndarray, torch.Tensor]) -> torch.Tensor:
