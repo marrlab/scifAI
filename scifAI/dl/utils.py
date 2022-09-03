@@ -4,7 +4,6 @@ import numpy as np
 import torch
 from tqdm import tqdm
 from sklearn.model_selection import train_test_split
-from matplotlib import pyplot as plt
 
 
 def read_data(path_to_data):
