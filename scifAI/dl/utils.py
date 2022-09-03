@@ -83,16 +83,3 @@ def train_validation_test_split(index,
                                                            stratify=y_train,
                                                            random_state=random_state)
     return train_index, validation_index, test_index
-
-
-def plot_heatmap_3_channels(heatmap):
-    fig, ((ax1, ax2, ax3)) = plt.subplots(1, 3, figsize=(15, 15))
-    ax1.axes.get_xaxis().set_visible(False)
-    ax1.axes.get_yaxis().set_visible(False)
-    ax1.imshow(heatmap[0])
-    ax2.axes.get_xaxis().set_visible(False)
-    ax2.axes.get_yaxis().set_visible(False)
-    ax2.imshow(heatmap[1])
-    ax3.axes.get_xaxis().set_visible(False)
-    ax3.axes.get_yaxis().set_visible(False)
-    ax3.imshow(heatmap[2])

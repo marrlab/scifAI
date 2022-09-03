@@ -1,12 +1,10 @@
 import os
 import glob
-import numpy as np
 import pandas as pd
 import h5py
 import random
 from joblib import Parallel, delayed
 from tqdm import tqdm
-
 
 def list_of_dict_to_dict(list_of_dicts):
     new_dict = dict()

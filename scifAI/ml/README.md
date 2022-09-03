@@ -4,7 +4,7 @@ In this folder, classes and methods are maintained that can be used for feature 
 
 The files include:
 
--     `intensity_correction`: includes a `sklearn.transform` for pixel intensity transform
+-   `intensity_correction`: includes a `sklearn.transform` for pixel intensity transform
 -   `segmentation`: provies two `sklearn.transform` for brightfield and fluorescent cell segmentation
 -   `features`: includes multiple feature classes which can be used with a `sklearn.pipeline.FeatureUnion`
 -   `feature_extractor`: includes a class to read the `metadata` and create the features

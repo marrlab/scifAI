@@ -26,7 +26,7 @@ class ShuffleChannel(object):
     Shuffle the chosen channel
     """
 
-    def __init__(self, channels_to_shuffle=[], perturb=False) -> None:
+    def __init__(self, channels_to_shuffle, perturb=False) -> None:
         self.channels_to_shuffle = channels_to_shuffle
         self.perturb = perturb
 
@@ -67,7 +67,7 @@ class LoadImage(Transform):
     https://pillow.readthedocs.io/en/stable/reference/Image.html
     """
 
-    def __init__(self, only_channels=[]) -> None:
+    def __init__(self, only_channels) -> None:
         self.only_channels = only_channels
 
     def __call__(self, name: Union[Sequence[Union[Path, str]], Path, str]):

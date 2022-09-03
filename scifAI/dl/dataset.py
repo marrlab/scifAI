@@ -5,7 +5,6 @@ import h5py
 from skimage.util import crop
 import copy
 import os
-import numpy as np
 
 seed_value = 42
 
@@ -60,12 +59,12 @@ class DatasetGenerator(Dataset):
 
     def __init__(self,
                 metadata,
+                label_map,
+                selected_channels,
                 reshape_size=64,
                 scaling_factor = 4095.,
-                label_map=[],
                 task="classification",
-                transform=None,
-                selected_channels=["Ch1"]):
+                transform=None):
 
         self.metadata = metadata.copy().reset_index(drop = True)
         self.selected_channels = selected_channels
