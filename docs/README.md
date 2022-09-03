@@ -8,4 +8,3 @@ IFC notebooks included
 -   In vivo identification of apoptotic and extracellular vesicle-bound live cells using image-based deep learning https://doi.org/10.1080/20013078.2020.1792683
 Other datasets:
 -   Malaria Cell Images Dataset downloaded from https://www.kaggle.com/datasets/iarunava/cell-images-for-detecting-malaria which is taken from the official NIH Website: https://ceb.nlm.nih.gov/repositories/malaria-datasets/
-

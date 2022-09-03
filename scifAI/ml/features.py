@@ -384,7 +384,7 @@ class HogFeatures(BaseEstimator, TransformerMixin):
                                 visualize=False,
                                 multichannel=False)
 
-            for i in range(len(hog_features)):
+            for i, _ in enumerate(hog_features):
                 features["Hog_" + str(i) + "_Ch" + str(ch+1)] = hog_features[i]
 
         return features
@@ -452,7 +452,7 @@ class CenterOfCellsDistances(BaseEstimator, TransformerMixin):
 
     Returns
     -------
-    features :  dict  
+    features :  dict
         dictionary including hog_1, hog_2 ...
 
     """
