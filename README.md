@@ -95,7 +95,6 @@ df_features = df_features.loc[:, df_features.std() > 0.]
 
 For different examples, you can follow our examples in the [docs](docs) folder.
 
-# How to cite this work
+## How to cite this work
 
 coming soon
-
