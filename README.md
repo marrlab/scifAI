@@ -35,6 +35,7 @@ For installing the package, you can simply clone the repository and run the foll
 ```bash
 pip -q install <PATH TO THE FOLDER>
 ```
+The should take less than a minute to install if the requirements already exist.
 
 ## How to use the package
 
