@@ -35,7 +35,6 @@ For installing the package, you can simply clone the repository and run the foll
 ```bash
 pip -q install <PATH TO THE FOLDER>
 ```
-The should take less than a minute to install if the requirements already exist.
 
 ## How to use the package
 
@@ -98,12 +97,4 @@ For different examples, you can follow our examples in the [docs](docs) folder.
 
 ## How to cite this work
 
-To cite this work, you would need to cite the preprint and the dataset:
-
-preprint:
-scifAI: Explainable machine learning for profiling the immunological synapse and functional characterization of therapeutic antibodies
-Sayedali Shetab Boushehri, Katharina Essig, Nikolaos-Kosmas Chlis, Sylvia Herter, Marina Bacac, Fabian J Theis, Elke Glasmacher, Carsten Marr, Fabian Schmich
-bioRxiv 2022.10.24.513494; doi: https://doi.org/10.1101/2022.10.24.513494
-
-dataset:
-Essig, Katharina et al. (2022), An imaging flow cytometry dataset for profiling the immunological synapse of therapeutic antibodies, Dryad, Dataset, https://doi.org/10.5061/dryad.ht76hdrk7
+coming soon
