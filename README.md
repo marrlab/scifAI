@@ -36,6 +36,8 @@ For installing the package, you can simply clone the repository and run the foll
 pip -q install <PATH TO THE FOLDER>
 ```
 
+The installation time is less than a minute if all the requirements exist.
+
 ## How to use the package
 
 For the feature extraction, you first need to calcalate the `metadata` dataframe with providing the correct data path. 
